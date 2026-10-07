@@ -1,6 +1,8 @@
 # RAG Pipeline Analytics & Knowledge Base Monitor
 
-A production-quality, interactive dashboard for real-time observability into **Retrieval-Augmented Generation (RAG)** systems. Demonstrates deep understanding of embedding spaces, retrieval quality metrics, MCP (Model Context Protocol) integration, and end-to-end RAG pipeline monitoring.
+> **Demo on simulated data.** Every number on this dashboard is generated in the browser by a random number generator, so the figures are illustrative. They are not results from real company data or a trained production model. The project shows how the analysis and the interactive visuals work, built as a single HTML file with Plotly.js.
+
+An interactive dashboard for real-time observability into **Retrieval-Augmented Generation (RAG)** systems. Demonstrates deep understanding of embedding spaces, retrieval quality metrics, MCP (Model Context Protocol) integration, and end-to-end RAG pipeline monitoring.
 
 **Live Demo:** [View the Dashboard](https://mayankjoshiii.github.io/rag-analytics-dashboard/)
 
@@ -8,7 +10,7 @@ A production-quality, interactive dashboard for real-time observability into **R
 
 ## 🎯 Overview
 
-This dashboard provides comprehensive analytics for RAG systems—a critical architecture that every AI company is building in 2026. It visualizes:
+This dashboard provides comprehensive analytics for RAG systems. It visualizes:
 
 - **Embedding Space Topology** - 2D t-SNE projections showing document clusters and retrieved chunks
 - **Retrieval Quality Metrics** - Precision@K, Recall@K, MRR, NDCG across document categories

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RAG Pipeline Analytics & Knowledge Base Monitor</title>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-1.58.5.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -525,6 +525,8 @@
     </style>
 </head>
 <body>
+<div style="background:#ffb020;color:#111;font:600 13px/1.45 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center;padding:7px 14px;position:relative;z-index:9999">Demo on simulated data: all figures are generated in the browser and are illustrative, not real results.</div>
+
     <div class="container">
         <!-- Header -->
         <header>
@@ -989,9 +991,18 @@
 
         // Get top K retrieved chunks for a query
         function getTopKChunks(query, k = 10) {
+            // Queries carry no embedding of their own, so use the centroid of documents in the matching category
+            const catIdx = QUERY_CATEGORIES.indexOf(query.category);
+            const sameCat = documents.filter(d => DOC_CATEGORIES.indexOf(d.category) === catIdx);
+            const pool = sameCat.length ? sameCat : documents;
+            const qEmb = query.embedding || [
+                pool.reduce((s, d) => s + d.embedding[0], 0) / pool.length,
+                pool.reduce((s, d) => s + d.embedding[1], 0) / pool.length
+            ];
+            const bias = query.relevanceBias ?? query.relevanceScore ?? 0.5;
             const scores = documents.map(doc => ({
                 doc: doc,
-                relevance: cosineSimilarity([query.embedding[0], query.embedding[1]], doc.embedding) * 0.5 + query.relevanceBias * 0.5
+                relevance: cosineSimilarity(qEmb, doc.embedding) * 0.5 + bias * 0.5
             }));
             return scores.sort((a, b) => b.relevance - a.relevance).slice(0, k);
         }
